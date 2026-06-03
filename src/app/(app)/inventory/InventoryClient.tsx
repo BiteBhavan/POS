@@ -105,10 +105,12 @@ export function InventoryClient({ items, categories }: Props) {
                 </div>
                 <div className="text-[11px] text-ink3 mb-2.5">Rs.{item.cost_per_unit} / {item.unit}</div>
                 <div className="flex gap-1.5">
-                  {!isViewer && <button onClick={() => { setSelectedItem(item); setPurchaseQty(''); setPurchaseCost(String(item.cost_per_unit)); setPurchaseVendor(''); setPurchaseOpen(true) }}
-                    className="flex-1 py-1.5 rounded-md text-[11px] font-semibold bg-surface2 border border-border text-ink3 hover:border-accent hover:text-accent transition-all">
-                    + Stock
-                  </button>
+                  {!isViewer && (
+                    <button onClick={() => { setSelectedItem(item); setPurchaseQty(''); setPurchaseCost(String(item.cost_per_unit)); setPurchaseVendor(''); setPurchaseOpen(true) }}
+                      className="flex-1 py-1.5 rounded-md text-[11px] font-semibold bg-surface2 border border-border text-ink3 hover:border-accent hover:text-accent transition-all">
+                      + Stock
+                    </button>
+                  )}
                   <button className="flex-1 py-1.5 rounded-md text-[11px] font-semibold bg-surface2 border border-border text-ink3 hover:border-border2 hover:text-ink2 transition-all">
                     Recipe
                   </button>
