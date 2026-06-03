@@ -19,57 +19,47 @@ export default function LoginPage() {
     setLoading(true)
     try {
       const { data: profile, error: profileErr } = await supabase
-        .from('users')
-        .select('*')
-        .eq('username', username.toLowerCase().trim())
-        .single()
-      if (profileErr || !profile) {
-        toast.error('Username not found')
-        return
-      }
-      const email = username.toLowerCase().trim() + '@bitebhavan.internal'
-      const { error: signInErr } = await supabase.auth.signInWithPassword({ email, password })
-      if (signInErr) {
-        toast.error('Invalid password')
-        return
-      }
+        .from('users').select('*').eq('username', username.toLowerCase().trim()).single()
+      if (profileErr || !profile) { toast.error('Username not found'); return }
+      const { error: signInErr } = await supabase.auth.signInWithPassword({
+        email: username.toLowerCase().trim() + '@bitebhavan.internal', password
+      })
+      if (signInErr) { toast.error('Invalid password'); return }
       setUser(profile as User)
-      toast.success('Welcome ' + profile.name)
-      const routes: Record<string, string> = {
-        owner: '/dashboard',
-        counter: '/new-order',
-        kitchen: '/order-queue',
-        delivery: '/delivery',
-      }
-      router.push(routes[profile.role] ?? '/dashboard')
-    } catch {
-      toast.error('Login failed')
-    } finally {
-      setLoading(false)
-    }
+      toast.success('Welcome, ' + profile.name + '!')
+      router.push({ owner:'/dashboard', counter:'/new-order', kitchen:'/order-queue', delivery:'/delivery' }[profile.role as string] ?? '/dashboard')
+    } catch { toast.error('Login failed') }
+    finally { setLoading(false) }
   }
 
   return (
-    <div className="min-h-screen bg-bg flex items-center justify-center p-4">
-      <div className="bg-surface border border-border rounded-2xl p-9 w-full max-w-sm">
-        <div className="flex items-center gap-3 mb-1">
-          <div className="w-10 h-10 bg-accent rounded-xl flex items-center justify-center text-xl">🍔</div>
-          <span className="font-display text-2xl text-ink">Bite Bhavan</span>
+    <div className="min-h-screen bg-[#1a3a5c] flex items-center justify-center p-4">
+      <div className="w-full max-w-sm">
+        <div className="text-center mb-8">
+          <div className="w-16 h-16 bg-accent rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4 shadow-lg">🍔</div>
+          <h1 className="text-2xl font-bold text-white">Bite Bhavan</h1>
+          <p className="text-white/50 text-sm mt-1">Cloud Kitchen Management</p>
         </div>
-        <p className="text-xs text-ink3 mb-6">Cloud Kitchen POS</p>
-        <form onSubmit={handleLogin} className="flex flex-col gap-3">
-          <div className="flex flex-col gap-1">
-            <label className="text-xs text-ink3 uppercase tracking-wider font-semibold">Username</label>
-            <input className="w-full bg-surface2 border border-border rounded-md px-3 py-2 text-ink text-sm outline-none focus:border-accent" placeholder="azeem" value={username} onChange={e => setUsername(e.target.value)} required />
-          </div>
-          <div className="flex flex-col gap-1">
-            <label className="text-xs text-ink3 uppercase tracking-wider font-semibold">Password</label>
-            <input type="password" className="w-full bg-surface2 border border-border rounded-md px-3 py-2 text-ink text-sm outline-none focus:border-accent" placeholder="••••••••" value={password} onChange={e => setPassword(e.target.value)} required />
-          </div>
-          <button type="submit" disabled={loading} className="mt-2 w-full py-3 bg-accent rounded-lg font-display text-base transition-all disabled:opacity-50">
-            {loading ? 'Signing in...' : 'Enter Dashboard'}
-          </button>
-        </form>
+        <div className="bg-white rounded-2xl shadow-xl p-7">
+          <h2 className="text-[15px] font-semibold text-ink mb-5">Sign in to your account</h2>
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div>
+              <label className="block text-[11px] font-semibold text-ink2 uppercase tracking-wider mb-1.5">Username</label>
+              <input className="w-full border border-border rounded-lg px-3 py-2.5 text-[14px] text-ink outline-none transition-all focus:border-accent focus:ring-2 focus:ring-accent/10 placeholder:text-ink4"
+                placeholder="Enter username" value={username} onChange={e => setUsername(e.target.value)} autoComplete="username" required/>
+            </div>
+            <div>
+              <label className="block text-[11px] font-semibold text-ink2 uppercase tracking-wider mb-1.5">Password</label>
+              <input type="password" className="w-full border border-border rounded-lg px-3 py-2.5 text-[14px] text-ink outline-none transition-all focus:border-accent focus:ring-2 focus:ring-accent/10 placeholder:text-ink4"
+                placeholder="Enter password" value={password} onChange={e => setPassword(e.target.value)} autoComplete="current-password" required/>
+            </div>
+            <button type="submit" disabled={loading}
+              className="w-full py-3 bg-accent text-white rounded-lg font-semibold text-[14px] hover:bg-accent-light transition-all shadow-sm disabled:opacity-50 mt-1">
+              {loading ? 'Signing in...' : 'Sign In →'}
+            </button>
+          </form>
+        </div>
+        <p className="text-center text-[11px] text-white/30 mt-5">app.bitebhavan.com · v1.0</p>
       </div>
     </div>
   )

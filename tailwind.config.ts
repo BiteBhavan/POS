@@ -1,5 +1,4 @@
 import type { Config } from 'tailwindcss'
-
 const config: Config = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -9,54 +8,49 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Sonar dark palette — warm, professional
-        bg:       '#111009',
-        surface:  '#181610',
-        surface2: '#1f1d14',
-        surface3: '#27241a',
-        border:   '#302d22',
-        border2:  '#3a3628',
-        // Accent — warm amber, refined
+        bg:       '#f4f6f9',
+        surface:  '#ffffff',
+        surface2: '#f8fafc',
+        surface3: '#f1f5f9',
+        border:   '#e2e8f0',
+        border2:  '#cbd5e1',
+        sidebar:  '#1a3a5c',
+        'sidebar-hover': 'rgba(255,255,255,0.07)',
+        'sidebar-active': 'rgba(255,255,255,0.12)',
         accent: {
-          DEFAULT: '#b8832a',
-          light:   '#c99440',
-          bg:      'rgba(184,131,42,0.07)',
+          DEFAULT: '#e8620a',
+          light:   '#f07020',
+          dark:    '#c5520a',
+          bg:      'rgba(232,98,10,0.08)',
         },
-        // Semantic
-        success: { DEFAULT: '#3d8a5e', bg: 'rgba(61,138,94,0.09)' },
-        danger:  { DEFAULT: '#a04845', bg: 'rgba(160,72,69,0.09)'  },
-        info:    { DEFAULT: '#3d6e8f', bg: 'rgba(61,110,143,0.09)' },
-        warn:    { DEFAULT: '#9e7e2e', bg: 'rgba(158,126,46,0.09)' },
-        // Text
-        ink:  '#e8e2d6',
-        ink2: '#8a8070',
-        ink3: '#565040',
-        ink4: '#353028',
+        success: { DEFAULT: '#059669', bg: 'rgba(5,150,105,0.08)'  },
+        danger:  { DEFAULT: '#dc2626', bg: 'rgba(220,38,38,0.08)'  },
+        info:    { DEFAULT: '#1a3a5c', bg: 'rgba(26,58,92,0.08)'   },
+        warn:    { DEFAULT: '#c2410c', bg: 'rgba(194,65,12,0.08)'  },
+        ink:  '#1a3a5c',
+        ink2: '#374151',
+        ink3: '#94a3b8',
+        ink4: '#cbd5e1',
       },
       fontFamily: {
         sans:    ['var(--font-jakarta)', 'system-ui', 'sans-serif'],
         display: ['var(--font-instrument)', 'Georgia', 'serif'],
       },
       borderRadius: {
-        sm:  '6px',
-        md:  '10px',
-        lg:  '14px',
-        xl:  '18px',
-        '2xl': '24px',
+        sm: '5px', md: '8px', lg: '10px', xl: '14px', '2xl': '18px',
+      },
+      boxShadow: {
+        sm: '0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04)',
+        md: '0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.04)',
+        lg: '0 10px 15px rgba(0,0,0,0.08), 0 4px 6px rgba(0,0,0,0.04)',
       },
       keyframes: {
-        'fade-in': {
-          from: { opacity: '0', transform: 'translateY(6px)' },
-          to:   { opacity: '1', transform: 'translateY(0)' },
-        },
-        'slide-in': {
-          from: { opacity: '0', transform: 'translateX(-8px)' },
-          to:   { opacity: '1', transform: 'translateX(0)' },
-        },
+        'fade-in': { from: { opacity: '0', transform: 'translateY(4px)' }, to: { opacity: '1', transform: 'translateY(0)' } },
+        'slide-in-left': { from: { transform: 'translateX(-100%)' }, to: { transform: 'translateX(0)' } },
       },
       animation: {
-        'fade-in':  'fade-in 0.2s ease-out',
-        'slide-in': 'slide-in 0.15s ease-out',
+        'fade-in': 'fade-in 0.18s ease-out',
+        'slide-in-left': 'slide-in-left 0.2s ease-out',
       },
     },
   },
