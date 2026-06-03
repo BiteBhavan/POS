@@ -86,9 +86,17 @@ export function Sidebar({ settings }: { settings?: { business_name: string; logo
         })}
       </nav>
 
-      {/* User */}
+    {/* User */}
       <div className="border-t border-border p-3">
-        <button className="w-full flex items-center gap-2.5 p-2 rounded-lg hover:bg-surface2 transition-colors text-left">
+        <button
+          onClick={async () => {
+            const { createClient } = await import('@/lib/supabase/client')
+            const supabase = createClient()
+            await supabase.auth.signOut()
+            useAuthStore.getState().setUser(null)
+            window.location.href = '/login'
+          }}
+          className="w-full flex items-center gap-2.5 p-2 rounded-lg hover:bg-surface2 transition-colors text-left">
           <div className="w-7 h-7 rounded-lg bg-surface3 border border-border2 flex items-center justify-center text-[11px] font-bold text-accent flex-shrink-0">
             {user?.name?.slice(0,2).toUpperCase() ?? 'U'}
           </div>
