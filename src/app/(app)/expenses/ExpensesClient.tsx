@@ -89,7 +89,7 @@ export function ExpensesClient({ expenses: initial, categories }: Props) {
                 <Input label="Date" type="date" value={form.expense_date} onChange={e => setForm(p=>({...p,expense_date:e.target.value}))} />
                 <Input label="Notes" placeholder="Optional…" value={form.notes} onChange={e => setForm(p=>({...p,notes:e.target.value}))} />
                 <button type="submit" disabled={saving}
-                  className={`w-full py-3 ${isViewer ? 'bg-surface3 text-ink3 cursor-not-allowed' : 'bg-accent text-white hover:bg-accent-light'} text-[#1a1400] rounded-lg font-display text-[15px] hover:bg-accent-light transition-all disabled:opacity-40 mt-1">
+                  className={`w-full py-3 rounded-lg font-semibold text-[14px] transition-all mt-1 ${isViewer ? 'bg-surface3 text-ink3 cursor-not-allowed' : 'bg-accent text-white hover:bg-accent-light'}`}>
                   {saving ? 'Saving…' : 'Add Expense'}
                 </button>
               </form>
