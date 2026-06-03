@@ -1,4 +1,4 @@
-export type UserRole = 'owner' | 'counter' | 'kitchen' | 'delivery'
+export type UserRole = 'owner' | 'counter' | 'kitchen' | 'delivery' | 'viewer'
 export type OrderSource = 'direct' | 'zomato' | 'whatsapp'
 export type OrderStatus = 'pending' | 'preparing' | 'ready' | 'out_for_delivery' | 'delivered' | 'cancelled'
 export type PaymentMode = 'cash' | 'upi' | 'card' | 'zomato_pay' | 'online'
