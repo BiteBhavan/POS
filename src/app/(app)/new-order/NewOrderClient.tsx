@@ -9,6 +9,7 @@ import { Modal } from '@/components/ui/Modal'
 import { formatCurrency, cn } from '@/lib/utils'
 import { Minus, Plus, X, StickyNote, MapPin, Search, ShoppingCart } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { useAuthStore } from '@/lib/store/auth'
 import toast from 'react-hot-toast'
 import type { MenuItem, MenuCategory, SavedAddress, OrderSource, PaymentMode } from '@/types'
 
