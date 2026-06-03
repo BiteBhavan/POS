@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/Button'
 import { formatCurrency } from '@/lib/utils'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
+import { useAuthStore } from '@/lib/store/auth'
 import type { Expense } from '@/types'
 
 interface ExpCat { id: string; name: string; color: string }
@@ -18,11 +19,14 @@ export function ExpensesClient({ expenses: initial, categories }: Props) {
   const [saving, setSaving] = useState(false)
   const supabase = createClient()
   const router = useRouter()
+  const { user: authUser } = useAuthStore()
+  const isViewer = authUser?.role === 'viewer'
 
   const total = expenses.reduce((s, e) => s + e.amount, 0)
 
   async function handleAdd(ev: React.FormEvent) {
     ev.preventDefault()
+    if (isViewer) { toast.error('View only access'); return }
     if (!form.description || !form.amount) { toast.error('Fill required fields'); return }
     setSaving(true)
     try {
@@ -85,7 +89,7 @@ export function ExpensesClient({ expenses: initial, categories }: Props) {
                 <Input label="Date" type="date" value={form.expense_date} onChange={e => setForm(p=>({...p,expense_date:e.target.value}))} />
                 <Input label="Notes" placeholder="Optional…" value={form.notes} onChange={e => setForm(p=>({...p,notes:e.target.value}))} />
                 <button type="submit" disabled={saving}
-                  className="w-full py-3 bg-accent text-[#1a1400] rounded-lg font-display text-[15px] hover:bg-accent-light transition-all disabled:opacity-40 mt-1">
+                  className={`w-full py-3 ${isViewer ? 'bg-surface3 text-ink3 cursor-not-allowed' : 'bg-accent text-white hover:bg-accent-light'} text-[#1a1400] rounded-lg font-display text-[15px] hover:bg-accent-light transition-all disabled:opacity-40 mt-1">
                   {saving ? 'Saving…' : 'Add Expense'}
                 </button>
               </form>

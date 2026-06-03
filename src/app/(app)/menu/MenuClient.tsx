@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils'
 import { Plus, Pencil } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
+import { useAuthStore } from '@/lib/store/auth'
 import type { MenuItem, MenuCategory } from '@/types'
 
 interface Props { items: MenuItem[]; categories: MenuCategory[] }
@@ -22,6 +23,8 @@ export function MenuClient({ items: initialItems, categories }: Props) {
   const [form, setForm] = useState({ name:'', emoji:'burger', category_id:'', direct_price:'', zomato_price:'', description:'' })
   const supabase = createClient()
   const router = useRouter()
+  const { user: authUser } = useAuthStore()
+  const isViewer = authUser?.role === 'viewer'
 
   const filtered = activeCat === 'all' ? items : items.filter(m => m.category?.slug === activeCat)
 
@@ -104,8 +107,8 @@ export function MenuClient({ items: initialItems, categories }: Props) {
                 </div>
               </div>
               <div className="px-3.5 py-2.5 flex items-center justify-between">
-                <Toggle checked={item.is_available} onChange={() => toggleAvailability(item)} label={item.is_available ? 'Available' : 'Unavailable'} />
-                <button onClick={() => openEdit(item)} className="flex items-center gap-1 text-[11px] text-ink3 hover:text-ink transition-colors bg-surface2 border border-border px-2.5 py-1 rounded-md">
+                <Toggle checked={item.is_available} onChange={() => { if(!isViewer) toggleAvailability(item) }} label={item.is_available ? 'Available' : 'Unavailable'} />
+                <button onClick={() => { if(!isViewer) openEdit(item) }} disabled={isViewer} className="flex items-center gap-1 text-[11px] text-ink3 hover:text-ink transition-colors bg-surface2 border border-border px-2.5 py-1 rounded-md">
                   <Pencil size={11} /> Edit
                 </button>
               </div>

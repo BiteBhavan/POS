@@ -81,7 +81,11 @@ export function NewOrderClient({ menuItems, categories, savedAddresses }: Props)
 
   const getPrice = useCallback((item: MenuItem) => priceList === 'zomato' ? item.zomato_price : item.direct_price, [priceList])
 
+  const { user } = useAuthStore()
+  const isViewer = user?.role === 'viewer'
+
   async function handlePlaceOrder() {
+    if (isViewer) { toast.error('View only access - cannot place orders'); return }
     if (!items.length) { toast.error('Add items first'); return }
     if (source !== 'zomato' && !addressShortCode.trim()) { toast.error('Address is required'); return }
     setPlacing(true)
@@ -240,7 +244,7 @@ export function NewOrderClient({ menuItems, categories, savedAddresses }: Props)
           </>
         )}
         <button onClick={handlePlaceOrder} disabled={placing || !items.length}
-          className="mt-3 w-full py-3 bg-accent text-white rounded-lg font-semibold text-[14px] transition-all hover:bg-accent-light disabled:opacity-40 disabled:cursor-not-allowed shadow-sm">
+          className={`mt-3 w-full py-3 rounded-lg font-semibold text-[14px] transition-all shadow-sm ${isViewer ? 'bg-surface3 text-ink3 cursor-not-allowed' : 'bg-accent text-white hover:bg-accent-light disabled:opacity-40 disabled:cursor-not-allowed'}`}>
           {placing ? 'Placing…' : '🖨 Place Order & Print KOT'}
         </button>
       </div>

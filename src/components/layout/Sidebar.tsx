@@ -12,7 +12,7 @@ import Image from 'next/image'
 
 const NAV = [
   { href: '/dashboard',     label: 'Dashboard',    icon: LayoutDashboard, s: 'OVERVIEW',     roles: ['owner','viewer'] as UserRole[] },
-  { href: '/new-order',     label: 'New Order',     icon: Plus,            s: 'ORDERS',       roles: ['owner','counter','viewer'] as UserRole[] },
+  { href: '/new-order',     label: 'New Order',     icon: Plus,            s: 'ORDERS',       roles: ['owner','counter'] as UserRole[] },
   { href: '/order-queue',   label: 'Order Queue',   icon: ChefHat,         s: 'ORDERS',       roles: ['owner','counter','kitchen','viewer'] as UserRole[], badge: true },
   { href: '/order-history', label: 'Order History', icon: ClipboardList,   s: 'ORDERS',       roles: ['owner','counter'] as UserRole[] },
   { href: '/delivery',      label: 'Delivery',      icon: Truck,           s: 'ORDERS',       roles: ['owner','delivery','viewer'] as UserRole[] },

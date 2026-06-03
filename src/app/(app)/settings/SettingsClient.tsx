@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/Button'
 import { Modal } from '@/components/ui/Modal'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
+import { useAuthStore } from '@/lib/store/auth'
 import type { AppSettings, User } from '@/types'
 import { Upload } from 'lucide-react'
 import Image from 'next/image'
@@ -23,8 +24,11 @@ export function SettingsClient({ settings: init, users }: Props) {
   const [newUser, setNewUser] = useState({ name:'', username:'', role:'counter', password:'' })
   const supabase = createClient()
   const router = useRouter()
+  const { user: authUser } = useAuthStore()
+  const isViewer = authUser?.role === 'viewer'
 
   async function handleSave() {
+    if (isViewer) { toast.error('View only access'); return }
     if (!settings) return
     setSaving(true)
     const { error } = await supabase.from('app_settings').update({
