@@ -68,8 +68,8 @@ export function InventoryClient({ items, categories }: Props) {
   return (
     <div className="flex flex-col h-full overflow-hidden">
       <Topbar title="Inventory">
-        <Button variant="ghost" size="sm" icon={<Plus size={13}/>} onClick={() => setAddOpen(true)}>Add Item</Button>
-        <Button variant="primary" size="sm" icon={<Package size={13}/>} onClick={() => { setSelectedItem(null); setPurchaseOpen(true) }}>Purchase Entry</Button>
+        {!isViewer && <Button variant="ghost" size="sm" icon={<Plus size={13}/>} onClick={() => setAddOpen(true)}>Add Item</Button>}
+        {!isViewer && <Button variant="primary" size="sm" icon={<Package size={13}/>} onClick={() => { setSelectedItem(null); setPurchaseOpen(true) }}>Purchase Entry</Button>}
       </Topbar>
       <div className="flex-1 overflow-y-auto p-4">
         {lowStock.length > 0 && (

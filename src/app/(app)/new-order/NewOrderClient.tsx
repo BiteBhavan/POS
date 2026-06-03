@@ -246,7 +246,7 @@ export function NewOrderClient({ menuItems, categories, savedAddresses }: Props)
         )}
         <button onClick={handlePlaceOrder} disabled={placing || !items.length}
           className={`mt-3 w-full py-3 rounded-lg font-semibold text-[14px] transition-all shadow-sm ${isViewer ? 'bg-surface3 text-ink3 cursor-not-allowed' : 'bg-accent text-white hover:bg-accent-light disabled:opacity-40 disabled:cursor-not-allowed'}`}>
-          {placing ? 'Placing…' : '🖨 Place Order & Print KOT'}
+          {isViewer ? '🔒 View Only' : placing ? 'Placing…' : '🖨 Place Order & Print KOT'}
         </button>
       </div>
     </>
