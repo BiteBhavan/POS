@@ -2,14 +2,12 @@ import { createClient } from '@/lib/supabase/server'
 import { Topbar } from '@/components/layout/Topbar'
 import { formatCurrency } from '@/lib/utils'
 import { format } from 'date-fns'
-import { Search } from 'lucide-react'
+import Link from 'next/link'
 
 export default async function CustomersPage() {
   const supabase = createClient()
   const { data } = await supabase
-    .from('saved_addresses')
-    .select('*')
-    .order('order_count', { ascending: false })
+    .from('saved_addresses').select('*').order('order_count', { ascending: false })
   const addresses = data ?? []
 
   return (
@@ -29,10 +27,17 @@ export default async function CustomersPage() {
               <tbody>
                 {addresses.map((a: any) => (
                   <tr key={a.id} className="border-b border-border last:border-b-0 hover:bg-surface2 transition-colors">
-                    <td className="px-3 py-2.5 font-bold text-accent text-[13px]">{a.short_code}</td>
                     <td className="px-3 py-2.5">
-                      <div className="text-[13px] font-medium text-ink">{a.primary_name ?? '—'}</div>
-                      {a.detail && a.detail !== a.primary_name && <div className="text-[10px] text-ink3">{a.detail}</div>}
+                      <Link href={`/customers/${encodeURIComponent(a.short_code)}`}
+                        className="font-bold text-accent text-[13px] hover:underline underline-offset-2">
+                        {a.short_code}
+                      </Link>
+                    </td>
+                    <td className="px-3 py-2.5">
+                      <Link href={`/customers/${encodeURIComponent(a.short_code)}`}
+                        className="text-[13px] font-medium text-ink hover:text-accent transition-colors">
+                        {a.primary_name ?? '—'}
+                      </Link>
                     </td>
                     <td className="px-3 py-2.5 text-[12px] text-ink2">{a.phone ?? '—'}</td>
                     <td className="px-3 py-2.5 font-bold text-[13px]">{a.order_count}</td>
@@ -40,9 +45,10 @@ export default async function CustomersPage() {
                       {a.last_ordered_at ? format(new Date(a.last_ordered_at), 'd MMM, h:mm a') : '—'}
                     </td>
                     <td className="px-3 py-2.5">
-                      <button className="bg-surface3 border border-border text-ink3 px-2.5 py-1 rounded-md text-[11px] font-medium hover:text-ink hover:border-border2 transition-colors">
-                        History
-                      </button>
+                      <Link href={`/customers/${encodeURIComponent(a.short_code)}`}
+                        className="bg-surface3 border border-border text-ink3 px-2.5 py-1 rounded-md text-[11px] font-medium hover:text-accent hover:border-accent transition-colors">
+                        View →
+                      </Link>
                     </td>
                   </tr>
                 ))}
