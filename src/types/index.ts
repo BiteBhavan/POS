@@ -23,7 +23,8 @@ export interface MenuItem {
   created_at: string; updated_at: string; category?: MenuCategory
 }
 export interface SavedAddress {
-  id: string; short_code: string; detail: string | null; phone: string | null
+  id: string; short_code: string; detail: string | null
+  primary_name: string | null; phone: string | null
   order_count: number; last_ordered_at: string | null; created_at: string
 }
 export interface OrderItem {
@@ -34,8 +35,9 @@ export interface OrderItem {
 export interface Order {
   id: string; order_number: number; source: OrderSource; status: OrderStatus
   price_list: PriceList; address_short_code: string | null; address_note: string | null
-  customer_phone: string | null; zomato_order_id: string | null
-  payment_mode: PaymentMode; subtotal: number; discount: number; total: number
+  customer_name: string | null; customer_phone: string | null
+  zomato_order_id: string | null; payment_mode: PaymentMode
+  subtotal: number; discount: number; total: number
   notes: string | null; created_by: string | null; created_at: string; updated_at: string
   order_items?: OrderItem[]
 }
