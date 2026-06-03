@@ -36,6 +36,7 @@ export function MenuClient({ items: initialItems, categories }: Props) {
   }
 
   async function handleSave() {
+    if (isViewer) { toast.error('View only access'); return }
     if (!form.name || !form.direct_price || !form.zomato_price) { toast.error('Fill required fields'); return }
     try {
       if (editItem) {
@@ -73,9 +74,11 @@ export function MenuClient({ items: initialItems, categories }: Props) {
   return (
     <div className="flex flex-col h-full overflow-hidden">
       <Topbar title="Menu Management">
-        <Button variant="primary" size="sm" icon={<Plus size={13}/>} onClick={() => { setEditItem(null); setForm({name:'',emoji:'burger',category_id:'',direct_price:'',zomato_price:'',description:''}); setAddOpen(true) }}>
-          Add Item
-        </Button>
+        {!isViewer && (
+          <Button variant="primary" size="sm" icon={<Plus size={13}/>} onClick={() => { setEditItem(null); setForm({name:'',emoji:'burger',category_id:'',direct_price:'',zomato_price:'',description:''}); setAddOpen(true) }}>
+            Add Item
+          </Button>
+        )}
       </Topbar>
       <div className="flex-1 overflow-y-auto p-4">
         <div className="flex gap-1.5 flex-wrap mb-4">
@@ -115,10 +118,12 @@ export function MenuClient({ items: initialItems, categories }: Props) {
             </div>
           ))}
 
-          <button onClick={() => { setEditItem(null); setForm({name:'',emoji:'burger',category_id:'',direct_price:'',zomato_price:'',description:''}); setAddOpen(true) }}
-            className="bg-surface border border-dashed border-border2 rounded-md flex flex-col items-center justify-center gap-2 text-ink3 hover:border-accent hover:text-accent transition-all min-h-[170px] cursor-pointer">
-            <Plus size={28} /><div className="text-[13px] font-semibold">Add Item</div>
-          </button>
+          {!isViewer && (
+            <button onClick={() => { setEditItem(null); setForm({name:'',emoji:'burger',category_id:'',direct_price:'',zomato_price:'',description:''}); setAddOpen(true) }}
+              className="bg-surface border border-dashed border-border2 rounded-md flex flex-col items-center justify-center gap-2 text-ink3 hover:border-accent hover:text-accent transition-all min-h-[170px] cursor-pointer">
+              <Plus size={28} /><div className="text-[13px] font-semibold">Add Item</div>
+            </button>
+          )}
         </div>
       </div>
 

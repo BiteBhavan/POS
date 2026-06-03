@@ -14,14 +14,14 @@ const NAV = [
   { href: '/dashboard',     label: 'Dashboard',    icon: LayoutDashboard, s: 'OVERVIEW',     roles: ['owner','viewer'] as UserRole[] },
   { href: '/new-order',     label: 'New Order',     icon: Plus,            s: 'ORDERS',       roles: ['owner','counter','viewer'] as UserRole[] },
   { href: '/order-queue',   label: 'Order Queue',   icon: ChefHat,         s: 'ORDERS',       roles: ['owner','counter','kitchen','viewer'] as UserRole[], badge: true },
-  { href: '/order-history', label: 'Order History', icon: ClipboardList,   s: 'ORDERS',       roles: ['owner','counter'] as UserRole[] },
+  { href: '/order-history', label: 'Order History', icon: ClipboardList,   s: 'ORDERS',       roles: ['owner','counter','viewer'] as UserRole[] },
   { href: '/delivery',      label: 'Delivery',      icon: Truck,           s: 'ORDERS',       roles: ['owner','delivery','viewer'] as UserRole[] },
-  { href: '/inventory',     label: 'Inventory',     icon: Package,         s: 'OPERATIONS',   roles: ['owner'] as UserRole[] },
+  { href: '/inventory',     label: 'Inventory',     icon: Package,         s: 'OPERATIONS',   roles: ['owner','viewer'] as UserRole[] },
   { href: '/menu',          label: 'Menu',          icon: UtensilsCrossed, s: 'OPERATIONS',   roles: ['owner','counter','viewer'] as UserRole[] },
   { href: '/expenses',      label: 'Expenses',      icon: Receipt,         s: 'FINANCE',      roles: ['owner','viewer'] as UserRole[] },
   { href: '/reports',       label: 'Reports',       icon: BarChart2,       s: 'FINANCE',      roles: ['owner','viewer'] as UserRole[] },
   { href: '/customers',     label: 'Customers',     icon: Users,           s: 'INTELLIGENCE', roles: ['owner','viewer'] as UserRole[] },
-  { href: '/settings',      label: 'Settings',      icon: Settings,        s: 'SYSTEM',       roles: ['owner'] as UserRole[] },
+  { href: '/settings',      label: 'Settings',      icon: Settings,        s: 'SYSTEM',       roles: ['owner','viewer'] as UserRole[] },
 ]
 
 interface Props {
